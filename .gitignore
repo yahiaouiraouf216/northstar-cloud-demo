@@ -1,1 +1,9 @@
 venv/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Exceptions
+!terraform/terraform.tfvars.example
