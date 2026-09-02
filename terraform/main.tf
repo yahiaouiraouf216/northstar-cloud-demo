@@ -46,6 +46,7 @@ resource "aws_security_group" "main" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
+    description = "Allow SSH from the internet"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -53,6 +54,7 @@ resource "aws_security_group" "main" {
   }
 
   ingress {
+    description = "Allow HTTP from the internet"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -60,6 +62,7 @@ resource "aws_security_group" "main" {
   }
 
   egress {
+    description = "Allow outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -104,7 +107,15 @@ resource "aws_instance" "main" {
   subnet_id              = aws_subnet.main.id
   vpc_security_group_ids = [aws_security_group.main.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
-
+  metadata_options {
+  http_endpoint = "enabled"
+  http_tokens   = "required"
+  }
+  root_block_device {
+  encrypted = true
+  }
+  ebs_optimized = true
+  monitoring = true
   user_data = file("${path.module}/user_data.sh")
 
   tags = {
