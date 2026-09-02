@@ -108,15 +108,15 @@ resource "aws_instance" "main" {
   vpc_security_group_ids = [aws_security_group.main.id]
   iam_instance_profile   = aws_iam_instance_profile.ec2_instance_profile.name
   metadata_options {
-  http_endpoint = "enabled"
-  http_tokens   = "required"
+    http_endpoint = "enabled"
+    http_tokens   = "required"
   }
   root_block_device {
-  encrypted = true
+    encrypted = true
   }
   ebs_optimized = true
-  monitoring = true
-  user_data = file("${path.module}/user_data.sh")
+  monitoring    = true
+  user_data     = file("${path.module}/user_data.sh")
 
   tags = {
     Name = "${var.project_name}-instance"
