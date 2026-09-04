@@ -1,0 +1,9 @@
+services:
+  northstar-app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: northstar-app
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
